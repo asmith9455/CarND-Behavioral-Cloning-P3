@@ -123,3 +123,9 @@ Will run the video at 48 FPS. The default FPS is 60.
 ## How to write a README
 A well written README file can enhance your project and portfolio.  Develop your abilities to create professional README files by completing [this free course](https://www.udacity.com/course/writing-readmes--ud777).
 
+### Readme must contain (according to the rubric):
+
+1. the approach taken for deriving and designing a model architecture fit for solving the given problem
+2. provides sufficient details of the characteristics and qualities of the architecture, such as the type of model used, the number of layers, the size of each layer. Visualizations emphasizing particular qualities of the architecture are encouraged.
+3. describes how the model was trained and what the characteristics of the dataset are. Information such as how the dataset was generated and examples of images from the dataset must be included.
+
