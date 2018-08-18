@@ -81,7 +81,7 @@ def explore_over_time(directory, N):
         throttle.append(float(data[4]))
         brake_input.append(float(data[5]))
         speed.append(float(data[6]))
-        images.append([mpimg.imread(data[0]), mpimg.imread(data[1]), mpimg.imread(data[2])])
+        images.append([mpimg.imread(data[0])])#, mpimg.imread(data[1]), mpimg.imread(data[2])])
 
         i = i + 1
 
