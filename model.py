@@ -18,113 +18,86 @@ import numpy as np
 
 import keras
 
-
-fname = "../data/P3-sim-data-udacity/data"
-# fname = "../data/P3-sim-data-5"
-dirs = ["../data/P3-sim-data-udacity/data"]
-
-
-# //steering: -1 to 1
-# // throttle 0 to 1
-# // brake 0 1
-# // speed 0 30
-
-images, sw_angles, throttle, brake_input, speeds = explore_over_time(fname, 300)
-
-print(images.shape)
-
-generate_summary_plot(images, sw_angles, throttle, brake_input, speeds)
-
-model = Sequential()
-
-image_shape = (70, 160, 3)# images[0,0,:,:].shape
-
-# model.add(__import__('tensorflow').keras.layers.InputLayer(input_shape=(None, 160, 320, 3)))
-
-model.add(Lambda(lambda x: __import__('tensorflow').image.rgb_to_grayscale(x)))
-
-model.add(Cropping2D(cropping=( (60,25), (0,0) )))
-
-model.add(Lambda(lambda x: __import__('keras').backend.tf.image.resize_images(x, (50,160))))
-
-model.add(Lambda(lambda x: (x / 255.0 - 0.5) * 2))
-
-model.add(Conv2D(filters=12, kernel_size=5, strides=(1,1), activation='relu'))
-
-model.add(Conv2D(filters=24, kernel_size=5, strides=(2,2), activation='relu'))
-
-model.add(Conv2D(filters=36, kernel_size=5, strides=(2,2), activation='relu'))
-
-model.add(Conv2D(filters=48, kernel_size=3, strides=(1,1), activation='relu'))
-
-model.add(Conv2D(filters=64, kernel_size=3, strides=(1,1), activation='relu'))
-
-model.add(Flatten())
-
-model.add(Dense(400, activation='relu'))
-
-model.add(Dense(600, activation='relu'))
-
-model.add(Dense(300, activation='relu'))
-
-model.add(Dense(100, activation='relu'))
-
-model.add(Dropout(0.5))
-
-model.add(Dense(1)) #steering wheel angle is the output
-
-# features = images[:,0,:,:]
-# labels = sw_angles
-
-opt = keras.optimizers.Adam(lr=0.0001)
-
-
-data_gen_all = multi_dir_data_gen(dirs, 64, 0.2, "ALL")
-# data_gen_train = multi_dir_data_gen(dirs, 64, 0.2, "TRAIN")
-# data_gen_valid = multi_dir_data_gen(dirs, 64, 0.2, "VALIDATION")
-
-model.compile(loss='mse', optimizer=opt) 
-
-for features, labels in data_gen_all:
-    print('features shape: ', features.shape)
-    print('labels shape: ', labels.shape)
-    model.fit(features, labels, validation_split=0.2, shuffle=True, epochs=2, batch_size=64)
-
-# for batch_ctr, images, sw_angles, throttle, brake_input, speeds in get_batches_multi_dir(dirs, 128):
-
-#     print('batch_ctr: ', batch_ctr)
-
-#     features = images[:,0,:,:]
-#     labels = sw_angles
-
-#     # features_aug_1 = 
-#     # labels_aug_1 = sw_angles * -1.0
-       
-#     # if (labels[0] > 0.01):
-
-#         # plt.subplot(211)
-
-#         # plt.title('steering angle: ' + str(labels[0]))
-
-#         # plt.imshow(features[0,:,:,:])
-
-#         # plt.subplot(212)
-
-#         # plt.title('steering angle: ' + str(labels_aug_1[0]))
-
-#         # plt.imshow(features_aug_1[0,:,:,:])
-
-#         # plt.show()
-
-#     model.fit(features, labels, validation_split=0.2, shuffle=True, epochs=4, batch_size=64)
-#     # model.fit(features_aug_1, labels_aug_1, validation_split=0.2, shuffle=True, epochs=4, batch_size=64)
-
-# model.fit_generator(data_gen_train, validation_data=data_gen_valid, samples_per_epoch=10, epochs=10)
-
-model.save('model.h5')
-
-
+load_prev_model = False
+train_model = True
+summary_plot = False
 compile_statistics = False
+
+dirs = \
+[
+    "../data/P3-sim-data-udacity/data",
+    "../data/P3-sim-data-hard-left-0"
+]
+
+for d in dirs:
+    print('frame count for', d, 'is: ', frame_count(d))
+
+if summary_plot:
+
+    images, sw_angles, throttle, brake_input, speeds = explore_over_time(fname, 300)
+
+    generate_summary_plot(images, sw_angles, throttle, brake_input, speeds)
+
+if train_model:
+
+    model = Sequential()
+
+    image_shape = (70, 160, 3)# images[0,0,:,:].shape
+
+    # model.add(__import__('tensorflow').keras.layers.InputLayer(input_shape=(None, 160, 320, 3)))
+
+    model.add(Lambda(lambda x: __import__('tensorflow').image.rgb_to_grayscale(x)))
+
+    model.add(Cropping2D(cropping=( (60,25), (0,0) )))
+
+    model.add(Lambda(lambda x: __import__('keras').backend.tf.image.resize_images(x, (50,160))))
+
+    model.add(Lambda(lambda x: (x / 255.0 - 0.5) * 2))
+
+    model.add(Conv2D(filters=12, kernel_size=5, strides=(1,1), activation='relu'))
+
+    model.add(Conv2D(filters=24, kernel_size=5, strides=(2,2), activation='relu'))
+
+    model.add(Conv2D(filters=36, kernel_size=5, strides=(2,2), activation='relu'))
+
+    model.add(Conv2D(filters=48, kernel_size=3, strides=(1,1), activation='relu'))
+
+    model.add(Conv2D(filters=64, kernel_size=3, strides=(1,1), activation='relu'))
+
+    model.add(Flatten())
+
+    model.add(Dense(400, activation='relu'))
+
+    model.add(Dense(600, activation='relu'))
+
+    model.add(Dense(300, activation='relu'))
+
+    model.add(Dense(100, activation='relu'))
+
+    model.add(Dropout(0.5))
+
+    model.add(Dense(1)) #steering wheel angle is the output
+
+    # features = images[:,0,:,:]
+    # labels = sw_angles
+
+    opt = keras.optimizers.Adam(lr=0.0001)
+
+
+    data_gen_all = multi_dir_data_gen(dirs, 64, 0.2, "ALL")
+    # data_gen_train = multi_dir_data_gen(dirs, 64, 0.2, "TRAIN")
+    # data_gen_valid = multi_dir_data_gen(dirs, 64, 0.2, "VALIDATION")
+
+    model.compile(loss='mse', optimizer=opt) 
+
+    if load_prev_model:
+        model = keras.models.load_model('model.h5')
+
+    for features, labels in data_gen_all:
+        print('features shape: ', features.shape)
+        print('labels shape: ', labels.shape)
+        model.fit(features, labels, validation_split=0.2, shuffle=True, epochs=5, batch_size=64)
+    model.save('model.h5')
 
 if compile_statistics:
 
@@ -170,7 +143,7 @@ if compile_statistics:
     plt.grid(which='major', axis='both')
     plt.grid(which='minor', axis='both')
 
-    plt.show()            
+    plt.show()
 
 # todo: plot history
 
@@ -184,9 +157,45 @@ if compile_statistics:
 
 # model.fit_generator(keras_data_gen)
 
+# for batch_ctr, images, sw_angles, throttle, brake_input, speeds in get_batches_multi_dir(dirs, 128):
+
+#     print('batch_ctr: ', batch_ctr)
+
+#     features = images[:,0,:,:]
+#     labels = sw_angles
+
+#     # features_aug_1 = 
+#     # labels_aug_1 = sw_angles * -1.0
+       
+#     # if (labels[0] > 0.01):
+
+#         # plt.subplot(211)
+
+#         # plt.title('steering angle: ' + str(labels[0]))
+
+#         # plt.imshow(features[0,:,:,:])
+
+#         # plt.subplot(212)
+
+#         # plt.title('steering angle: ' + str(labels_aug_1[0]))
+
+#         # plt.imshow(features_aug_1[0,:,:,:])
+
+#         # plt.show()
+
+#     model.fit(features, labels, validation_split=0.2, shuffle=True, epochs=4, batch_size=64)
+#     # model.fit(features_aug_1, labels_aug_1, validation_split=0.2, shuffle=True, epochs=4, batch_size=64)
+
+# model.fit_generator(data_gen_train, validation_data=data_gen_valid, samples_per_epoch=10, epochs=10)
 
 
 
+
+
+# //steering: -1 to 1
+# // throttle 0 to 1
+# // brake 0 1
+# // speed 0 30
                
 
 

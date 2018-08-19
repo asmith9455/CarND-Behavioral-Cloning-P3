@@ -143,19 +143,19 @@ def multi_dir_data_gen(dirs, batch_size, train_fraction, mode="TRAIN"):
 
 
         features_left = images[:,1,:,:]
-        labels_left = sw_angles + 1.0
+        labels_left = sw_angles + 0.5 # was 1.0
 
 
         features_left_rev = np.flip(features_left, 2)
-        labels_left_rev = (sw_angles + 1.0)*-1.0
+        labels_left_rev = (sw_angles + 0.5)*-1.0  # was 1.0
 
 
         features_right = images[:,2,:,:]
-        labels_right = sw_angles - 1.0
+        labels_right = sw_angles - 0.5 # was 1.0
 
 
         features_right_rev = np.flip(features_right, 2)
-        labels_right_rev = (sw_angles - 1.0)*-1.0
+        labels_right_rev = (sw_angles - 0.5)*-1.0  # was 1.0
 
         start_index = 0
         end_index = 0
