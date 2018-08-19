@@ -35,17 +35,17 @@ def generate_summary_plot(images, sw_angle, throttle, brake_input, speeds):
 
     plt.imshow(images[0,0,:,:])
 
-    # plt.subplot(324)
+    plt.subplot(324)
 
-    # plt.title('left image')
+    plt.title('left image')
 
-    # plt.imshow(images[0,1,:,:])
+    plt.imshow(images[0,1,:,:])
 
-    # plt.subplot(326)
+    plt.subplot(326)
 
-    # plt.title('right image')
+    plt.title('right image')
 
-    # plt.imshow(images[0,2,:,:])
+    plt.imshow(images[0,2,:,:])
 
     plt.show()
 
@@ -81,7 +81,7 @@ def explore_over_time(directory, N):
         throttle.append(float(data[4]))
         brake_input.append(float(data[5]))
         speed.append(float(data[6]))
-        images.append([mpimg.imread(data[0])])#, mpimg.imread(data[1]), mpimg.imread(data[2])])
+        images.append([mpimg.imread(data[0]), mpimg.imread(data[1]), mpimg.imread(data[2])])
 
         i = i + 1
 
