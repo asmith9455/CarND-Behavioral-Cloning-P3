@@ -126,6 +126,13 @@ A well written README file can enhance your project and portfolio.  Develop your
 ### Readme must contain (according to the rubric):
 
 1. the approach taken for deriving and designing a model architecture fit for solving the given problem
+
+I started off by assuming a convolutional network would be suitable for this problem, as the steering angle seems to be related to the features of the images produced by the camera. 
+
 2. provides sufficient details of the characteristics and qualities of the architecture, such as the type of model used, the number of layers, the size of each layer. Visualizations emphasizing particular qualities of the architecture are encouraged.
+
+
 3. describes how the model was trained and what the characteristics of the dataset are. Information such as how the dataset was generated and examples of images from the dataset must be included.
+
+I think that dataset training was the most critical part of this project. 
 
