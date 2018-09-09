@@ -66,7 +66,7 @@ The model includes RELU layers to introduce nonlinearity (code line 20), and the
 
 The model contains dropout layers in order to reduce overfitting (model.py line 93). Also, while training I adjusted the number of training epochs, looking for the number that would yield consistent improvements in both training and validation accuracy. The larger the number of epochs, the greater the change that the training loss would get to its minimum and the validation accuracy would stop improving (loss would stop decreasing).
 
-The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track.
+The model was tested by running it through the simulator and ensuring that the vehicle could stay on the track. This was done in place of forming a test set of data.
 
 #### 3. Model parameter tuning
 
@@ -74,9 +74,9 @@ The model used an adam optimizer, so the learning rate was not tuned manually (m
 
 #### 4. Appropriate training data
 
-Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving, recovering from the left and right sides of the road ... 
+Training data was chosen to keep the vehicle driving on the road. I used a combination of center lane driving (the set supplied by Udacity), repeated left turns (the hard left with the dirt on the right), and recovering from the left and right sides of the road through the hard turn. In addition, I used the left and right camera images to improve the centering performance of the car.
 
-For details about how I created the training data, see the next section. 
+For more details about how I created the training data, see the next section. 
 
 ### Model Architecture and Training Strategy
 
@@ -140,8 +140,10 @@ Once I did the above, the car made it over the bridge reliably, but exited the t
 ![Recovery Image 2](report_imgs/recovery_2.jpg)
 ![Recovery Image 3](report_imgs/recovery_3.jpg)
 
-I did not record any data on track 2, although that likely would have made the network more generic.
+I did not record any data on track 2, although that likely would have made the network more generic. I also did not test on track 2. 
 
 The Udacity set contains 24 108 images. My addition data for the hard left hander with the dirt path on the right midway through the turn contains 4 755 images. This is a total of 28 863 data points. With data augmentation, I had 173 178 pairs of images and steering angles. I build the data preprocessing into the network architecture by using Keras lambdas and RGB to greyscale conversion, as described above. 
 
 I finally randomly shuffled the data set and put 20% of the data into a validation set. I used this training data for training the model. The validation set helped determine if the model was over or under fitting.
+
+I am fairly certain that creation of the training set and the training process were the key parts of this project, especially since the NVIDIA architecture is so well suited to the problem.
