@@ -128,17 +128,17 @@ I first trained the model on the center images in the Udacity provided set. Afte
 
 Then, I included the left and right camera images and applied biases such that a corrective steering action would be applied. A negative steering angle turns the car left, and a positive steering angle turns the car right. So, for the left camera image, I added a positive bias, indicating that the car should turn more to the right if the center camera was in the left camera's position. Similarly, I added a negative bias to the steering angle associated with the right camera angles. This worked extremely well, and after training with the new data the car would exhibit something like 'line follower' behaviour - as soon as it deviated from the path driven in the training data, it would sharply correct. I played with the bias number, and found that the response was tunable depending on the bias applied. A bias of 1.0 in each direction for the left and right cameras resulted in a jerky center line follower response. 0.5 was more reasonable, I think that the bias could be adjusted to be speed dependent to make driving smooth at all speeds (likely need a larger bias at slower speeds). I also performed the 'horizontal flip' and steering angle negation on the left and right camera angles. Therefore, I was able to increase the size of my data set by a factor of 6 fairly easily. Here is an example of flipping the image:
 
-![Original Image](report_imgs/center_2016_12_01_13_30_48_287.jpg)
+![Original Image](report_imgs/sample_center_image.jpg)
 
-![Horizontally Flipped Image](report_imgs/center_2016_12_01_13_30_48_287_flipped.jpg)
+![Horizontally Flipped Image](report_imgs/sample_center_image_flipped.jpg)
 
 If the steering angle for the image on the left (the original image) was 1.0, the steering angle for the image on the right would be -1.0.
 
-Once I did the above, the car made it over the bridge reliably, but exited the track onto the dirt road (it didn't turn left hard enough). To fix this, I recorded data only on that turn, 5 or 6 times. Each time, I attempted to keep my driving as identical as possible. Then, I took my existing model and trained it on this new data, using the same data augmentation process. The car then successfully navigated the turn. I was quite surprised that was all it took, and really felt like deep learning was a possibly practical technique after experiencing this. In the identical runs, I drove some runs that were intended to enable the model to correct itself if it got off track.
+Once I did the above, the car made it over the bridge reliably, but exited the track onto the dirt road (it didn't turn left hard enough). To fix this, I recorded data only on that turn, 5 or 6 times. Then, I took my existing model and trained it on this new data, using the same data augmentation process. The car then successfully navigated the turn. I was quite surprised that was all it took, and really felt like deep learning was a possibly practical technique after experiencing this. I also drove some runs that were intended to enable the model to correct itself if it got off track. Here are 3 pictures that demonstrate a recovery:
 
-[image3]: ./examples/placeholder_small.png "Recovery Image"
-[image4]: ./examples/placeholder_small.png "Recovery Image"
-[image5]: ./examples/placeholder_small.png "Recovery Image"
+![Recovery Image 1](report_imgs/recovery_1.jpg)
+![Recovery Image 2](report_imgs/recovery_2.jpg)
+![Recovery Image 3](report_imgs/recovery_3.jpg)
 
 I did not record any data on track 2, although that likely would have made the network more generic.
 
