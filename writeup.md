@@ -23,7 +23,7 @@ My project includes the following files:
 * model.py containing the script to create and train the model
 * drive.py for driving the car in autonomous mode
 * model.h5 containing a trained convolution neural network 
-* writeup_report.md or writeup_report.pdf summarizing the results
+* writeup_report.md summarizing the results
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and the drive.py file, the car can be driven autonomously around the track by executing 
@@ -144,6 +144,4 @@ I did not record any data on track 2, although that likely would have made the n
 
 The Udacity set contains 24 108 images. My addition data for the hard left hander with the dirt path on the right midway through the turn contains 4 755 images. This is a total of 28 863 data points. With data augmentation, I had 173 178 pairs of images and steering angles. I build the data preprocessing into the network architecture by using Keras lambdas and RGB to greyscale conversion, as described above. 
 
-I finally randomly shuffled the data set and put 20% of the data into a validation set. 
-
-I used this training data for training the model. The validation set helped determine if the model was over or under fitting. The ideal number of epochs was 5 as evidenced by trial and error. I used an adam optimizer so that manually training the learning rate wasn't necessary.
+I finally randomly shuffled the data set and put 20% of the data into a validation set. I used this training data for training the model. The validation set helped determine if the model was over or under fitting.
