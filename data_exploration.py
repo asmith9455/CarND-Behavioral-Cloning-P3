@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 
 def generate_summary_plot(images, sw_angle, throttle, brake_input, speeds):
+    # generates plots of the different data for the purpose of data exploration
 
     plt.figure()
 
@@ -50,6 +51,7 @@ def generate_summary_plot(images, sw_angle, throttle, brake_input, speeds):
     plt.show()
 
 def frame_count(directory):
+    # count the amount of data given the training data directory
 
     c = 0
 
@@ -59,6 +61,7 @@ def frame_count(directory):
     return c
 
 def explore_over_time(directory, N):
+    # explore up to N elements of the data in the data contained in 'directory'
 
     sw_angles = []
     speed = []
@@ -94,6 +97,7 @@ def explore_over_time(directory, N):
     return np.array(images), np.array(sw_angles), np.array(throttle), np.array(brake_input), np.array(speed)
 
 def explore_sw_angles_over_time(directory, N):
+    # explore up to N elements of steering wheel angles in the data contained in 'directory'
 
     sw_angles = []
 
@@ -121,6 +125,7 @@ def explore_sw_angles_over_time(directory, N):
     return np.array(sw_angles)
 
 def explore_speed_over_time(directory, N):
+    # explore up to N elements of speed in the data contained in 'directory'
 
     speed = []
 
@@ -148,6 +153,7 @@ def explore_speed_over_time(directory, N):
     return np.array(speed)
 
 def explore_images_over_time(directory, N):
+    # explore up to N elements of images in the data contained in 'directory'
 
     images = []
 
@@ -170,8 +176,8 @@ def explore_images_over_time(directory, N):
 
     return np.array(images)
 
-
 def explore_data(directory, N):
+    # explore up to N elements of sim data in the data contained in 'directory', and return it in the SimOutputFrame format
 
     sim_data = []
 
